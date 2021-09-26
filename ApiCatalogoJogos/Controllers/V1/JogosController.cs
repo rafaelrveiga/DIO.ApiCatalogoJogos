@@ -47,8 +47,6 @@ namespace ApiCatalogoJogos.Controllers.V1
         [HttpGet("{idJogo:guid}")]
         public async Task<ActionResult<JogoViewModel>> Obter([FromRoute] Guid idJogo)
         {
-            throw new Exception();
-
             var jogo = await _jogoService.Obter(idJogo);
 
             if (jogo == null)
@@ -66,7 +64,7 @@ namespace ApiCatalogoJogos.Controllers.V1
 
                 return Ok(jogo);
             }
-            catch (JogoJaCadastradoException ex)
+            catch (JogoJaCadastradoException)
             {
                 return UnprocessableEntity("Já existe um jogo com este nome para esta produtora");
             }
@@ -81,7 +79,7 @@ namespace ApiCatalogoJogos.Controllers.V1
 
                 return Ok();
             }
-            catch (JogoNaoCadastradoException ex)
+            catch (JogoNaoCadastradoException)
             {
                 return NotFound("Não existe este jogo");
             }
@@ -96,7 +94,7 @@ namespace ApiCatalogoJogos.Controllers.V1
 
                 return Ok();
             }
-            catch (JogoNaoCadastradoException ex)
+            catch (JogoNaoCadastradoException)
             {
                 return NotFound("Não existe este jogo");
             }
@@ -108,10 +106,10 @@ namespace ApiCatalogoJogos.Controllers.V1
             try
             {
                 await _jogoService.Remover(idJogo);
-                
+
                 return Ok();
             }
-            catch (JogoNaoCadastradoException ex)
+            catch (JogoNaoCadastradoException)
             {
                 return NotFound("Não existe este jogo");
             }
